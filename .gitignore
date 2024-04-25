@@ -1,0 +1,11 @@
+.env
+.vscode
+__pycache__/
+.idea/
+dump.rdb
+.DS_Store
+!/.ipython/
+/.ipython/*
+!/.ipython/profile_default/
+/.ipython/profile_default/*
+!/.ipython/profile_default/startup/

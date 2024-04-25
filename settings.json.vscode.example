@@ -1,0 +1,16 @@
+{
+  "editor.tabSize": 4,
+  "python.linting.flake8Enabled": true,
+  "python.linting.pylintEnabled": false,
+  "editor.wordWrapColumn": 119,
+  "python.linting.flake8Args": [
+    "--max-line-length=119",
+    "--exclude=*/migrations/*, scripts/*, *settings*, manage.py, *tests*, */__init__.py"
+  ],
+  "python.formatting.autopep8Args": [
+    "--max-line-length=119",
+    "--exclude=*/migrations/*, scripts/*, *settings*, manage.py, *tests*, */__init__.py"
+  ],
+  "python.linting.enabled": true,
+  "python.pythonPath": "your_path_to_python"
+}

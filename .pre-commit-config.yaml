@@ -1,0 +1,14 @@
+repos:
+-   repo: https://gitlab.com/pycqa/flake8
+    rev: '4.0.1'
+    hooks:
+    -   id: flake8
+        name: flake8 check
+        language_version: python3
+        args: ["--exclude=.ipython/*,seeds/*,*,scripts/*,*settings*,*tests*,*/__init__.py,*/migrations/*", --max-line-length=119]
+-   repo: https://github.com/Lucas-C/pre-commit-hooks-bandit
+    rev: master
+    hooks:
+    -   id: python-bandit-vulnerability-check
+        name: Bandit check
+        language_version: python3

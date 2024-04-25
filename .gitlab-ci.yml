@@ -1,0 +1,46 @@
+stages:
+  - deploy
+
+.deploy_aws:
+  before_script:
+    - service api stop
+  script:
+    - echo Stopping services!
+    - service api stop
+
+    - echo '- - - - - - - - - -'
+    - echo 'Update is starts!!'
+    - echo '- - - - - - - - - -'
+
+    - rsync -atvrzO --progress --exclude ".gitlab-ci.yml" ./ $PROJECT_PATH/
+    - echo "$ENV_VARS" > "$PROJECT_PATH/.env"
+    - pip install -r $PROJECT_PATH/requirements.txt
+    - pip install -r $PROJECT_PATH/history_app_requirements.txt
+    - chown -R admin:admin $PROJECT_PATH
+    - cd $PROJECT_PATH && /opt/venv/backend/bin/alembic upgrade head
+  
+  after_script:
+    - service api start
+
+deploy_Staging:
+  when: manual
+  extends: .deploy_aws
+  stage: deploy
+  before_script:
+    - export ENV_VARS=$ENV_STAGING
+  only:
+    refs:
+      - master
+  tags:
+    - <project-repo>-staging
+
+deploy_QA:
+  extends: .deploy_aws
+  stage: deploy
+  before_script:
+    - export ENV_VARS=$ENV_QA
+  only:
+    refs:
+      - test
+  tags:
+    - <project-repo>-qa

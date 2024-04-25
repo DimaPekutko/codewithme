@@ -1,14 +1,11 @@
 repos:
--   repo: https://gitlab.com/pycqa/flake8
-    rev: '4.0.1'
+-   repo: https://github.com/PyCQA/isort
+    rev: 5.12.0
     hooks:
-    -   id: flake8
-        name: flake8 check
-        language_version: python3
-        args: ["--exclude=.ipython/*,seeds/*,*,scripts/*,*settings*,*tests*,*/__init__.py,*/migrations/*", --max-line-length=119]
--   repo: https://github.com/Lucas-C/pre-commit-hooks-bandit
-    rev: master
+      - id: isort
+
+-   repo: https://github.com/psf/black
+    rev: 23.1.0
     hooks:
-    -   id: python-bandit-vulnerability-check
-        name: Bandit check
-        language_version: python3
+      - id: black .
+        args: ['--line-length 120']

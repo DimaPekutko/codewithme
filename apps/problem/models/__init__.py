@@ -5,10 +5,4 @@ from .lang_problem import LangProblem
 from .code_assertion import CodeAssertion
 
 
-__all__ = (
-    'ProblemCatM2M',
-    'ProblemCategory',
-    'Problem',
-    'LangProblem',
-    'CodeAssertion'
-)
+__all__ = ("ProblemCatM2M", "ProblemCategory", "Problem", "LangProblem", "CodeAssertion")

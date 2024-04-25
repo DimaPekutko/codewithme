@@ -8,7 +8,7 @@ from db.models import *
 
 
 class Problem(TableWithDate):
-    __tablename__ = 'problems'
+    __tablename__ = "problems"
 
     id = Column(Integer, primary_key=True)
 
@@ -16,10 +16,10 @@ class Problem(TableWithDate):
     desc = Column(String, nullable=False)
     complexity_level = Column(Integer, nullable=False)
 
-    categories = relationship('ProblemCategory', secondary='problems_categories', lazy='joined')
+    categories = relationship("ProblemCategory", secondary="problems_categories", lazy="joined")
     status = sa.Column(sa.Enum(types.ProblemStatus), nullable=False, default=types.ProblemStatus.disabled)
 
-    author_id = Column(Integer, ForeignKey('users.id'))
-    author = relationship('User')
+    author_id = Column(Integer, ForeignKey("users.id"))
+    author = relationship("User")
 
-    lang_problems = relationship('LangProblem', back_populates='problem')
+    lang_problems = relationship("LangProblem", back_populates="problem")

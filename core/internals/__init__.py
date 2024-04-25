@@ -4,8 +4,8 @@ from .base_import_service import BaseImportService
 from .celery import celery_app
 
 __all__ = (
-    'get_openapi_schema',
-    'OrmInternalService',
-    'BaseImportService',
-    'celery_app',
+    "get_openapi_schema",
+    "OrmInternalService",
+    "BaseImportService",
+    "celery_app",
 )

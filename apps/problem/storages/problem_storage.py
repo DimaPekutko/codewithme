@@ -8,12 +8,14 @@ from db import async_session
 from .. import models, types, schemas, lang_templates
 
 
-class ProblemStorage():
+class ProblemStorage:
     async def get_lang_problem(self, lproblem_id: int) -> schemas.FullLangProblem:
         async with async_session() as session:
             q = sa.select(models.LangProblem).where(models.LangProblem.id == lproblem_id)
-            q = q.options(joinedload(models.LangProblem.problem).joinedload(models.Problem.categories),
-                          joinedload(models.LangProblem.assertions))
+            q = q.options(
+                joinedload(models.LangProblem.problem).joinedload(models.Problem.categories),
+                joinedload(models.LangProblem.assertions),
+            )
 
             cursor = await session.execute(q)
             problem: models.Problem = cursor.unique().scalar_one()
@@ -23,8 +25,10 @@ class ProblemStorage():
     async def get(self, problem_id: int) -> schemas.FullProblem:
         async with async_session() as session:
             q = sa.select(models.Problem).where(models.Problem.id == problem_id)
-            q = q.options(joinedload(models.Problem.lang_problems).joinedload(models.LangProblem.assertions),
-                          joinedload(models.Problem.categories))
+            q = q.options(
+                joinedload(models.Problem.lang_problems).joinedload(models.LangProblem.assertions),
+                joinedload(models.Problem.categories),
+            )
 
             cursor = await session.execute(q)
             problem: models.Problem = cursor.unique().scalar_one()
@@ -37,7 +41,7 @@ class ProblemStorage():
 
             joins = [
                 joinedload(models.Problem.lang_problems).joinedload(models.LangProblem.assertions),
-                joinedload(models.Problem.categories)
+                joinedload(models.Problem.categories),
             ]
 
             q = q.options(*joins)
@@ -59,7 +63,7 @@ class ProblemStorage():
                     code_context=lang_templates.python.DEFAULT_CONTEXT,
                     initial_code=lang_templates.python.DEFAULT_INIT,
                     status=types.ProblemLangStatus.active,
-                    assertions=[models.CodeAssertion(code=lang_templates.python.DEFAULT_ASSERT)]
+                    assertions=[models.CodeAssertion(code=lang_templates.python.DEFAULT_ASSERT)],
                 ),
             ]
             await session.commit()
@@ -77,9 +81,9 @@ class ProblemStorage():
             await session.execute(q)
             await session.commit()
 
-    async def update_categories(self,
-                                problem_id: int,
-                                payload: schemas.UpdateCategories) -> List[schemas.ProblemCategory]:
+    async def update_categories(
+        self, problem_id: int, payload: schemas.UpdateCategories
+    ) -> List[schemas.ProblemCategory]:
         async with async_session() as session:
             q = sa.select(models.Problem).where(models.Problem.id == problem_id)
 
@@ -99,17 +103,22 @@ class ProblemStorage():
             active = types.ProblemLangStatus.active.value
             disabled = types.ProblemLangStatus.disabled.value
 
-            q = sa.update(models.LangProblem).where(models.LangProblem.problem_id == problem_id)\
-                .values(status=sa.case([
-                    (models.LangProblem.language.in_(payload.langs), active)
-                ], else_=disabled).cast(sa.Enum(types.ProblemLangStatus)))
+            q = (
+                sa.update(models.LangProblem)
+                .where(models.LangProblem.problem_id == problem_id)
+                .values(
+                    status=sa.case([(models.LangProblem.language.in_(payload.langs), active)], else_=disabled).cast(
+                        sa.Enum(types.ProblemLangStatus)
+                    )
+                )
+            )
 
             await session.execute(q)
             await session.commit()
 
     async def add_assertion(self, lang_problem_id: int) -> schemas.CodeAssertion:
         async with async_session() as session:
-            code = 'test assertion'
+            code = "test assertion"
 
             assertion = models.CodeAssertion(lang_problem_id=lang_problem_id, code=code)
             session.add(assertion)

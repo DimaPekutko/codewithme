@@ -5,13 +5,20 @@ from db.orm import Base
 from apps.users.schemas import User
 
 from ..storages import ProblemStorage
-from ..schemas import DefaultProblem, FullProblem, CodeAssertion, BaseUpdateSchema, UpdateActiveLangs, \
-    ProblemCategory, UpdateCategories
+from ..schemas import (
+    DefaultProblem,
+    FullProblem,
+    CodeAssertion,
+    BaseUpdateSchema,
+    UpdateActiveLangs,
+    ProblemCategory,
+    UpdateCategories,
+)
 from ..types import ProblemStatus
 from ..services import PythonBuilder
 
 
-class ProblemCases():
+class ProblemCases:
     def __init__(self, repo: ProblemStorage) -> None:
         self.repo = repo
 
@@ -22,7 +29,7 @@ class ProblemCases():
             complexity_level=5,
             author_id=user.id,
             status=ProblemStatus.disabled,
-            categories=[]
+            categories=[],
         )
         problem_id = await self.repo.new_problem(problem)
         return await self.repo.get(problem_id)
@@ -53,7 +60,7 @@ class ProblemCases():
             try:
                 await PythonBuilder.build_code(problem.lang_problems[0])
             except ValueError as err:
-                raise HTTPException(status_code=400, detail=f'Can not parse problem code, {str(err)}')
+                raise HTTPException(status_code=400, detail=f"Can not parse problem code, {str(err)}")
 
         await self.repo.update_problem_status(problem_id, new_status)
 

@@ -7,7 +7,7 @@ from ..loggers.log_request import log_requets_params
 from settings import LOG_REQUEST
 
 
-SUPPORTED_VERSIONS = ('v1', )
+SUPPORTED_VERSIONS = ("v1",)
 
 
 def get_application() -> FastAPI:
@@ -26,16 +26,13 @@ def get_application() -> FastAPI:
         allow_headers=["*"],
     )
 
-    SocketManager(app=app,
-                  mount_location='/ws',
-                  socketio_path='/',
-                  cors_allowed_origins=[])
+    SocketManager(app=app, mount_location="/ws", socketio_path="/", cors_allowed_origins=[])
 
     for version in SUPPORTED_VERSIONS:
         routers_data = GetRouters.call(version)
 
         for router_data in routers_data:
-            if router_data.get('prefix'):
+            if router_data.get("prefix"):
                 prefix = f"/api/{version}/{router_data.get('prefix')}"
             else:
                 prefix = f"/api/{version}"
@@ -47,11 +44,7 @@ def get_application() -> FastAPI:
                 dependencies = extra_params.pop("dependencies", [])
                 dependencies.append(Depends(log_requets_params))
 
-            app.include_router(
-                router_data["router"],
-                prefix=prefix, **extra_params,
-                dependencies=dependencies
-            )
+            app.include_router(router_data["router"], prefix=prefix, **extra_params, dependencies=dependencies)
 
     # decorate Fast API application with some additional handlers for events, requests, etc
     decorate_fast_api(app)

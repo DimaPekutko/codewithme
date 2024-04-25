@@ -3,6 +3,6 @@ from .game import Game
 
 
 __all__ = (
-    'Runtime',
-    'Game',
+    "Runtime",
+    "Game",
 )

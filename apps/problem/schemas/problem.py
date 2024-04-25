@@ -40,7 +40,6 @@ class LangProblem(OrmSchema):
 
 
 class FullProblem(BaseProblem):
-
     id: int
     author_id: int
     lang_problems: List[LangProblem]

@@ -7,11 +7,10 @@ from apps.problem.storages import ProblemStorage
 from .. import schemas, storages, types
 
 
-PYTHON_DOCKER_IMG = 'pythonlang_docker'
+PYTHON_DOCKER_IMG = "pythonlang_docker"
 
 
-class ExecutionService():
-
+class ExecutionService:
     def __init__(self) -> None:
         self.problem_storage = ProblemStorage()
         self.playground_storage = storages.PlaygroundStorage()
@@ -24,7 +23,7 @@ class ExecutionService():
 
         # start
         client.start(container)
-        sock._sock.send(bytes(code, encoding='utf-8'))
+        sock._sock.send(bytes(code, encoding="utf-8"))
         sock._sock.close()
         sock.close()
 
@@ -53,7 +52,7 @@ class ExecutionService():
             result = await self._run_in_container(code=whole_code)
             new_status = types.RuntimeStatus.failed if result.failed else types.RuntimeStatus.completed
 
-            output = result.errors[0] if len(result.errors) else 'all tests are passed'
+            output = result.errors[0] if len(result.errors) else "all tests are passed"
 
         except ValueError as err:
             result = schemas.ExecutionResult(passed=0, failed=0, errors=[str(err)])
@@ -66,7 +65,7 @@ class ExecutionService():
             tests_failed=result.failed,
             finish_date=datetime.utcnow(),
             status=new_status,
-            output=output
+            output=output,
         )
         await self.playground_storage.update_runtime(runtime.id, update_payload)
 

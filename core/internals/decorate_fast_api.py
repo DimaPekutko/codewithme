@@ -7,7 +7,6 @@ from ..loggers.log_request import log_response_params
 from .get_openapi_schema import get_openapi_schema
 
 
-
 def decorate_fast_api(fast_api):
     @fast_api.on_event("shutdown")
     async def shutdown():

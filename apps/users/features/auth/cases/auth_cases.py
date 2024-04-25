@@ -18,12 +18,15 @@ class AuthCases:
         user = await self._users_repo.get_user_by_identity(data.email)
 
         if not user:
-            return await self.sign_up(SignUp(
-                email=data.email,
-                full_name=data.name,
-                picture=data.picture,
-                password='google_way',
-            ), avoid_check=True)
+            return await self.sign_up(
+                SignUp(
+                    email=data.email,
+                    full_name=data.name,
+                    picture=data.picture,
+                    password="google_way",
+                ),
+                avoid_check=True,
+            )
 
         tokens_pair = AuthToken.generate_pair(user.dict())
         return AuthResponse(user=user, **tokens_pair)

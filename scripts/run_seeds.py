@@ -1,9 +1,10 @@
 import sys
+
 sys.path = ["", ".."] + sys.path[1:]
 from core import logger  # noqa: E402
 from core.scripts import perform
 
-script_names = ('admins', 'problem_categories')
+script_names = ("admins", "problem_categories")
 
 PERFORM_FUNC_NAME = "perform"
 SCRIPTS_PATH = "scripts.seeds"

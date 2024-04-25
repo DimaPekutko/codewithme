@@ -1,9 +1,7 @@
 import docker
 import os
 
-PYTHON_IMG = 'pythonlang_docker'
-
-
+PYTHON_IMG = "pythonlang_docker"
 
 
 def main():
@@ -68,9 +66,9 @@ except AssertionError:
 
     print(json.loads(stdout))
 
-    print('Exit: {}'.format(status_code))
-    print('log stdout: {}'.format(stdout))
-    print('log stderr: {}'.format(stderr))
+    print("Exit: {}".format(status_code))
+    print("log stdout: {}".format(stdout))
+    print("log stderr: {}".format(stderr))
 
     # print(client.images.get(PYTHON_IMG))
 
@@ -96,5 +94,5 @@ except AssertionError:
     #     print(cnt.attrs['Config']['Image'])
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

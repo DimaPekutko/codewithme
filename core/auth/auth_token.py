@@ -32,9 +32,7 @@ class AuthToken:
         expires_refresh_token = timedelta(minutes=AUTH_REFRESH_TOKEN_EXPIRE_MINUTES)
         return {
             "access_token": access_security.create_access_token(subject=data),
-            "refresh_token": access_security.create_refresh_token(
-                subject=data, expires_delta=expires_refresh_token
-            ),
+            "refresh_token": access_security.create_refresh_token(subject=data, expires_delta=expires_refresh_token),
         }
 
     @staticmethod

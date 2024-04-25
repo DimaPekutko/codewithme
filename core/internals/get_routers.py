@@ -19,8 +19,7 @@ class GetRouters:
     def call(cls, version):
         # scan all 'models' folders in TARGET_FOLDER recursively
         routers_data = []
-        files_with_routers = glob(
-            f'{cls.TARGET_FOLDER}/**/routers_{version}.py', recursive=True)
+        files_with_routers = glob(f"{cls.TARGET_FOLDER}/**/routers_{version}.py", recursive=True)
 
         for module_path in files_with_routers:
             try:

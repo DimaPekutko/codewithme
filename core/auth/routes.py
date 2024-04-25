@@ -12,11 +12,11 @@ class AuthRoute(APIRoute):
         original_route_handler = super().get_route_handler()
 
         async def custom_route_handler(request: Request) -> Response:
-            authorization_header = request.headers.get('authorization', None)
+            authorization_header = request.headers.get("authorization", None)
             if not authorization_header:
                 request.state.user = None
             else:
-                token = authorization_header.split(' ')[-1]
+                token = authorization_header.split(" ")[-1]
                 request.state.user = AuthUser(**AuthToken.decrypt_token(token))
             response = await original_route_handler(request)
             return response

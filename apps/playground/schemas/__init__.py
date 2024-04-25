@@ -1,15 +1,24 @@
-from .playground import SubmitPayload, RuntimePayload, RuntimeUpdatePayload, Runtime, FullRuntime, \
-    ExecutionResult, SearchGamePayload, FullGame, FinishGamePayload
+from .playground import (
+    SubmitPayload,
+    RuntimePayload,
+    RuntimeUpdatePayload,
+    Runtime,
+    FullRuntime,
+    ExecutionResult,
+    SearchGamePayload,
+    FullGame,
+    FinishGamePayload,
+)
 
 
 __all__ = (
-    'SubmitPayload',
-    'RuntimePayload',
-    'RuntimeUpdatePayload',
-    'Runtime',
-    'FullRuntime',
-    'ExecutionResult',
-    'SearchGamePayload',
-    'FullGame',
-    'FinishGamePayload'
+    "SubmitPayload",
+    "RuntimePayload",
+    "RuntimeUpdatePayload",
+    "Runtime",
+    "FullRuntime",
+    "ExecutionResult",
+    "SearchGamePayload",
+    "FullGame",
+    "FinishGamePayload",
 )

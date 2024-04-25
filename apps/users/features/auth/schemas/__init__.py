@@ -7,10 +7,10 @@ from .access_token_schema import AccessTokenSchema
 
 
 __all__ = (
-    'SignIn',
-    'SignUp',
-    'GoogleSignIn',
-    'AuthResponse',
-    'RefreshTokenSchema',
-    'AccessTokenSchema',
+    "SignIn",
+    "SignUp",
+    "GoogleSignIn",
+    "AuthResponse",
+    "RefreshTokenSchema",
+    "AccessTokenSchema",
 )

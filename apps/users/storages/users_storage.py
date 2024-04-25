@@ -40,16 +40,19 @@ class UsersStorage:
     and responsible only for CRUDL with minimal validations and mostly
     with queries to DB
     """
+
     @classmethod
     async def create_user(cls, user: UserCreate) -> User:
         salt = get_random_string()
         hashed_password = hash_password(user.password, salt)
 
         async with async_session() as session:
-            user = cls._table(email=user.email,
-                              full_name=user.full_name,
-                              picture=str(user.picture),
-                              hashed_password=f"{salt}${hashed_password}")
+            user = cls._table(
+                email=user.email,
+                full_name=user.full_name,
+                picture=str(user.picture),
+                hashed_password=f"{salt}${hashed_password}",
+            )
             session.add(user)
             await session.commit()
         return await cls.get_user(user.id)

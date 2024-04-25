@@ -11,19 +11,21 @@ from sqlalchemy.dialects import postgresql
 
 
 # revision identifiers, used by Alembic.
-revision = 'c18b5570ef4a'
-down_revision = 'e3cbf35e14eb'
+revision = "c18b5570ef4a"
+down_revision = "e3cbf35e14eb"
 branch_labels = None
 depends_on = None
 
 
 def upgrade():
-    register_strategy = postgresql.ENUM('default', 'google', name='registerstrategy')
+    register_strategy = postgresql.ENUM("default", "google", name="registerstrategy")
     register_strategy.create(op.get_bind())
-    op.add_column('users', sa.Column('register_strategy', sa.Enum('default', 'google', name='registerstrategy'), nullable=False))
+    op.add_column(
+        "users", sa.Column("register_strategy", sa.Enum("default", "google", name="registerstrategy"), nullable=False)
+    )
 
 
 def downgrade():
-    op.drop_column('users', 'register_strategy')
-    register_strategy = postgresql.ENUM('default', 'google', name='registerstrategy')
+    op.drop_column("users", "register_strategy")
+    register_strategy = postgresql.ENUM("default", "google", name="registerstrategy")
     register_strategy.drop(op.get_bind())

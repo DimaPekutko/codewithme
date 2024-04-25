@@ -48,7 +48,7 @@ class FullRuntime(Runtime):
     output: Optional[str] = None
 
     finish_date: Optional[datetime] = None
-    created_date: datetime = Field(alias='created_at')
+    created_date: datetime = Field(alias="created_at")
 
 
 class ExecutionResult(BaseModel):

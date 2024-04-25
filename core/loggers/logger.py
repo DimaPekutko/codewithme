@@ -9,6 +9,7 @@ class Formatter:
     Formatter to remove sensitive data such as password, apiKeys and etc
     from: https://github.com/Delgan/loguru/issues/17#issuecomment-717318455
     """
+
     def __init__(self, scrub_patterns=None):
         super().__init__()
         self.scrub_patterns = scrub_patterns
@@ -22,7 +23,7 @@ class Formatter:
 
 # Regexes to remove sensitive data
 scrub_patterns = {
-    r'\'(authorization|password|cookie)\': \'(.*?)\'': r"'\1': '[REDACTED]'",
+    r"\'(authorization|password|cookie)\': \'(.*?)\'": r"'\1': '[REDACTED]'",
     r'"(access_token|refresh_token|)":"(.*?)"': r"'\1':'[REDACTED]'",
 }
 
